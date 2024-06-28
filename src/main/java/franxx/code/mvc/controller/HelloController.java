@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 
@@ -18,9 +19,9 @@ public class HelloController {
     private HelloService helloService;
 
     @GetMapping(path = "/hello")
-    public void helloWorld(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String parameter = request.getParameter("name");
-        String hai = helloService.hai(parameter);
+    public void helloWorld(@RequestParam(name = "name", required = false) String name,
+                           HttpServletResponse response) throws IOException {
+        String hai = helloService.hai(name);
         response.getWriter().println(hai);
     }
 }
