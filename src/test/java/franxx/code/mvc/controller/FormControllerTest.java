@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,7 +30,8 @@ class FormControllerTest {
                         .param("name", "mee")
         ).andExpectAll(
                 status().isOk(),
-                content().string(Matchers.containsString("Hai mee"))
+                header().string(HttpHeaders.CONTENT_TYPE, Matchers.containsString(MediaType.TEXT_HTML_VALUE)),
+                content().string(Matchers.containsString("hai mee"))
         );
     }
 }
