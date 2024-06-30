@@ -44,4 +44,24 @@ class PersonControllerTest {
                 ))
         );
     }
+
+    @Test
+    void createValidation() throws Exception {
+        mockMvc.perform(
+                post("/person")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("email", "mail@me")
+                        .param("phone", "0000")
+                        .param("address.city", "bogor")
+                        .param("address.county", "indo")
+                        .param("hobbies[0]", "makan")
+                        .param("hobbies[1]", "ngoding")
+                        .param("socialMedia[0].name", "fb")
+                        .param("socialMedia[0].url", "www")
+                        .param("socialMedia[1].name", "ig")
+                        .param("socialMedia[1].url", "wwwig")
+        ).andExpectAll(
+                status().isBadRequest()
+        );
+    }
 }

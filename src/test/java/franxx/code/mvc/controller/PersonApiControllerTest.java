@@ -55,4 +55,32 @@ class PersonApiControllerTest {
                 content().json(jsonRequest)
         );
     }
+
+    @Test
+    @SneakyThrows
+    void createPersonValidation() {
+        CreatePersonRequest request = CreatePersonRequest.of(
+                "",
+                "",
+                "0101",
+                CreatePersonRequest.Address.of("bogor", "id"),
+                List.of("kodng", "mkn"),
+                List.of(
+                        CreatePersonRequest.SocialMedia.of("fb", "fb.com"),
+                        CreatePersonRequest.SocialMedia.of("ig", "ig.com")
+                )
+        );
+
+        String jsonRequest = objectMapper.writeValueAsString(request);
+
+        mockMvc.perform(
+                post("/api/person")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest)
+        ).andExpectAll(
+                status().isBadRequest()
+        );
+    }
+
 }

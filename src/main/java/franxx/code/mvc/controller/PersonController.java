@@ -1,6 +1,7 @@
 package franxx.code.mvc.controller;
 
 import franxx.code.mvc.model.CreatePersonRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,7 @@ public class PersonController {
     @PostMapping(path = "/person", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public String createPerson(@ModelAttribute CreatePersonRequest request) {
+    public String createPerson(@ModelAttribute @Valid CreatePersonRequest request) {
         System.out.println(request);
 
         return String.format(

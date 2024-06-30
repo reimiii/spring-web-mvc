@@ -1,6 +1,7 @@
 package franxx.code.mvc.controller;
 
 import franxx.code.mvc.model.CreatePersonRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ public class PersonApiController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public CreatePersonRequest createPersonRequest(@RequestBody CreatePersonRequest request) {
+    public CreatePersonRequest createPersonRequest(@RequestBody @Valid CreatePersonRequest request) {
         return request;
     }
 }
