@@ -61,7 +61,8 @@ class PersonControllerTest {
                         .param("socialMedia[1].name", "ig")
                         .param("socialMedia[1].url", "wwwig")
         ).andExpectAll(
-                status().isBadRequest()
+                status().isBadRequest(),
+                content().string(Matchers.containsString("validation error:"))
         );
     }
 }
