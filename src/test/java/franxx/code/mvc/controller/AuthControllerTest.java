@@ -1,5 +1,6 @@
 package franxx.code.mvc.controller;
 
+import jakarta.servlet.http.Cookie;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,16 @@ class AuthControllerTest {
 
     @Test
     void success() throws Exception {
-       mockMvc.perform(
-               post("/auth/login")
-                       .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                       .param("username", "me")
-                       .param("password", "me")
-       ).andExpectAll(
-               status().isOk(),
-               content().string(Matchers.containsString("OK"))
-       );
+        mockMvc.perform(
+                post("/auth/login")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("username", "me")
+                        .param("password", "me")
+        ).andExpectAll(
+                status().isOk(),
+                content().string(Matchers.containsString("OK")),
+                cookie().value("username", Matchers.is("me"))
+        );
     }
 
     @Test
@@ -47,4 +49,15 @@ class AuthControllerTest {
         );
     }
 
+    @Test
+    void getCookie() throws Exception {
+
+        mockMvc.perform(
+                get("/auth/user")
+                        .cookie(new Cookie("username", "me"))
+        ).andExpectAll(
+                status().isOk(),
+                content().string(Matchers.containsString("hello me"))
+        );
+    }
 }
