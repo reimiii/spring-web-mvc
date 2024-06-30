@@ -18,51 +18,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @AutoConfigureMockMvc
 class PersonControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Test
-    void create() throws Exception {
-        mockMvc.perform(
-                post("/person")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .param("username", "me")
-                        .param("email", "mail@me")
-                        .param("phone", "0000")
-                        .param("address.city", "bogor")
-                        .param("address.county", "indo")
-                        .param("hobbies[0]", "makan")
-                        .param("hobbies[1]", "ngoding")
-                        .param("socialMedia[0].name", "fb")
-                        .param("socialMedia[0].url", "www")
-                        .param("socialMedia[1].name", "ig")
-                        .param("socialMedia[1].url", "wwwig")
-        ).andExpectAll(
-                status().isOk(),
-                content().string(Matchers.containsString(
-                        "create person: me mail@me 0000, with address: bogor indo"
-                ))
-        );
-    }
+  @Test
+  void create() throws Exception {
+    mockMvc.perform(
+          post("/person")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("username", "me")
+                .param("email", "mail@me")
+                .param("phone", "0000")
+                .param("address.city", "bogor")
+                .param("address.county", "indo")
+                .param("hobbies[0]", "makan")
+                .param("hobbies[1]", "ngoding")
+                .param("socialMedia[0].name", "fb")
+                .param("socialMedia[0].url", "www")
+                .param("socialMedia[1].name", "ig")
+                .param("socialMedia[1].url", "wwwig")
+    ).andExpectAll(
+          status().isOk(),
+          content().string(Matchers.containsString(
+                "create person: me mail@me 0000, with address: bogor indo"
+          ))
+    );
+  }
 
-    @Test
-    void createValidation() throws Exception {
-        mockMvc.perform(
-                post("/person")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .param("email", "mail@me")
-                        .param("phone", "0000")
-                        .param("address.city", "bogor")
-                        .param("address.county", "indo")
-                        .param("hobbies[0]", "makan")
-                        .param("hobbies[1]", "ngoding")
-                        .param("socialMedia[0].name", "fb")
-                        .param("socialMedia[0].url", "www")
-                        .param("socialMedia[1].name", "ig")
-                        .param("socialMedia[1].url", "wwwig")
-        ).andExpectAll(
-                status().isBadRequest(),
-                content().string(Matchers.containsString("validation error:"))
-        );
-    }
+  @Test
+  void createValidation() throws Exception {
+    mockMvc.perform(
+          post("/person")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("phone", "0000")
+                .param("address.city", "bogor")
+                .param("address.county", "indo")
+                .param("hobbies[0]", "makan")
+                .param("hobbies[1]", "ngoding")
+                .param("socialMedia[0].name", "fb")
+                .param("socialMedia[0].url", "www")
+                .param("socialMedia[1].name", "ig")
+                .param("socialMedia[1].url", "wwwig")
+    ).andExpectAll(
+          status().isBadRequest(),
+          content().string(Matchers.containsString("invalid data.."))
+    );
+  }
 }
