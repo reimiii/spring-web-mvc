@@ -53,4 +53,11 @@ class HelloControllerTest {
           );
   }
 
+  @Test
+  void getMustacheRedirect() throws Exception {
+    mockMvc.perform(get("/web/hello"))
+          .andExpectAll(
+                status().is3xxRedirection()
+          );
+  }
 }
