@@ -26,11 +26,21 @@ class UserControllerTest {
   @SneakyThrows
   void getUser() {
     mockMvc.perform(
-         get("/user/current")
-               .sessionAttr("user", User.of("me"))
+          get("/user/current")
+                .sessionAttr("user", User.of("me"))
     ).andExpectAll(
           status().isOk(),
           content().string(Matchers.containsString("hello: me"))
+    );
+  }
+
+  @Test
+  @SneakyThrows
+  void getUserInvalid() {
+    mockMvc.perform(
+          get("/user/current")
+    ).andExpectAll(
+          status().is3xxRedirection()
     );
   }
 }
