@@ -1,0 +1,8 @@
+###
+POST http://localhost:8181/todos?todo=java
+Accept: application/json
+
+###
+
+GET http://localhost:8181/todos
+Accept: application/json
